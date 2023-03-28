@@ -6,6 +6,7 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
+    [SerializeField] float rotationSpeed;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] int maxCameraDistance;
     [SerializeField] int minCameraDistance;
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour
         }
         HandleMovement();
         HandleZoom();
+        HandleRotation();
 
     }
 
@@ -27,7 +29,9 @@ public class CameraController : MonoBehaviour
         var mouseWheelInput = Input.mouseScrollDelta.y;
         var cameraDistance = (cinemachineComponentBase as CinemachineFramingTransposer).m_CameraDistance;
         
-        if (mouseWheelInput == 0 || (cameraDistance <= 0 && mouseWheelInput == 1) || (cameraDistance > 30 && mouseWheelInput == -1))
+        if (mouseWheelInput == 0 || 
+            (cameraDistance <= minCameraDistance && mouseWheelInput == 1) || 
+            (cameraDistance > maxCameraDistance && mouseWheelInput == -1))
         {
             return;
         }
@@ -51,8 +55,6 @@ public class CameraController : MonoBehaviour
             rotationVector.y -= 1f;
         }
 
-        float rotationSpeed = 100f;
-
         transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
     }
 
@@ -62,19 +64,19 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            inputMoveDir.z += 1f;
+            inputMoveDir.z -= 1f;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            inputMoveDir.z -= 1f;
+            inputMoveDir.z += 1f;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            inputMoveDir.x -= 1f;
+            inputMoveDir.x += 1f;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            inputMoveDir.x += 1f;
+            inputMoveDir.x -= 1f;
         }
 
         Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
