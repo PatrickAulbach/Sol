@@ -7,10 +7,14 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
     [SerializeField] float rotationSpeed;
+    [SerializeField] float zoomSpeed;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] int maxCameraDistance;
     [SerializeField] int minCameraDistance;
     private CinemachineComponentBase cinemachineComponentBase;
+    private int initalCameraDistance = 10;
+    private float cameraDistanceScale;
+    private readonly float MAX_CAMERA_DISTANCE_SCALE = 1.5f;
 
     void Update()
     {
@@ -18,6 +22,10 @@ public class CameraController : MonoBehaviour
         {
             cinemachineComponentBase = cinemachineVirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
         }
+
+        var scale = (cinemachineComponentBase as CinemachineFramingTransposer).m_CameraDistance / initalCameraDistance;
+        cameraDistanceScale = scale <= MAX_CAMERA_DISTANCE_SCALE ? scale : MAX_CAMERA_DISTANCE_SCALE;
+
         HandleMovement();
         HandleZoom();
         HandleRotation();
@@ -38,7 +46,7 @@ public class CameraController : MonoBehaviour
 
         if (cinemachineComponentBase is CinemachineFramingTransposer)
         {
-            (cinemachineComponentBase as CinemachineFramingTransposer).m_CameraDistance -= mouseWheelInput * movementSpeed;
+            (cinemachineComponentBase as CinemachineFramingTransposer).m_CameraDistance -= mouseWheelInput * zoomSpeed;
         }
     }
 
@@ -79,7 +87,7 @@ public class CameraController : MonoBehaviour
             inputMoveDir.x -= 1f;
         }
 
-        Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
+        Vector3 moveVector = transform.forward * inputMoveDir.z * cameraDistanceScale + transform.right * inputMoveDir.x * cameraDistanceScale;
         transform.position += moveVector * movementSpeed * Time.deltaTime;
     }
 }

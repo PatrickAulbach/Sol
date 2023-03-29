@@ -11,6 +11,7 @@
 /[Uu]serSettings/
 /[Aa]ssets/Plugins/
 /[Aa]ssets/Third Party
+/[Aa]ssets/TextMesh Pro
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta

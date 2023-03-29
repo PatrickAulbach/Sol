@@ -5,11 +5,11 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
 
-    [SerializeField] int rotationSpeed;
+    [SerializeField] float orbitalSpeed;
     [SerializeField] GameObject rotationCenter;
     
     void Update()
     {
-        transform.RotateAround(rotationCenter.transform.position, new Vector3(0, 1, 0), rotationSpeed * Time.deltaTime);
+        transform.RotateAround(rotationCenter.transform.position, new Vector3(0, 1, 0), orbitalSpeed * Time.deltaTime);
     }
 }
