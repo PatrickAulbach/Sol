@@ -18,6 +18,7 @@ public class PlanetManager : MonoBehaviour
     
     private void Awake()
     {
+        Debug.Log(transform.name);
         InitializeCanvas();
         InitializeRessources();
     }
