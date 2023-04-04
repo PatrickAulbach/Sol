@@ -1,0 +1,17 @@
+public enum Menus
+{
+    OVERLAY,
+    OPTION_MENU,
+    SUN_MENU,
+    MERCURY_MENU,
+    VENUS_MENU,
+    EARTH_MENU,
+    MARS_MENU,
+    JUPITER_MENU,
+    SATURN_MENU,
+    URANUS_MENU,
+    NEPTUNE_MENU,
+    MOON_MENU,
+    NEBULA_MENU,
+    ASTEROID_MENU
+}

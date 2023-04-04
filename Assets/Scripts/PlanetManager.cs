@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
     [SerializeField] PlanetController planetController;
+    [SerializeField] MenuManager menuManager;
+    [SerializeField] Menus menu;
     [SerializeField] int childPosition;
     private const float ADDITIONAL_SPRITE_SCALE_FACTOR = 0.7f;
     private readonly Vector2 CANVAS_SIZE = new Vector2(3, 0.5f);
@@ -52,5 +54,9 @@ public class PlanetManager : MonoBehaviour
 
         canvas.transform.SetParent(transform, false);
 
+    }
+
+    private void OnMouseDown() {
+        menuManager.ActivateMenu(menu);
     }
 }
